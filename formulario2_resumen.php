@@ -63,10 +63,10 @@ if (isset($_POST['btnEnv'])) {
     //todo validar si la imagen que se ha subido esta dentro del array o no 
 
     //* Si en el array foto (el nombre del array que almacena la variable $_FILES se puede comprobar haciendo var_dump($_FILES)) el valor de extension que almacena la clave type NO esta definida en el array de $tipos_nime muestra el siguiente error. 
-
+    //? preguntar a paco para que sirve is_uploaded_file segun he leido es para verificar si un archivo fue cargado mediante una solicutud HTTP devuelve true si el archivo es valido y fue cargado a traves de una solicitud HHTP. 
     //* Si dentro del array foto (que es el nombre del array que almacena la variable $_FILES se puede comprobar haciendo var_dump($_FILES)) la clave type almacena o devuelve una extension que NO esta almacenada o definida en el array $tipos_nime muestro el siguiente error.
     //? la clave type del array foto devuelve por ejemplo lo siguiente: ["type"]=> string(10) "image/jpeg", esta justo esta definida en el array (la primera).
-
+    if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
     if (!in_array($_FILES['foto']['type'] , $tipos_nime)){
         echo "<p class='error'>Has subido una imagen con una extension que no esta en el array o has subido otro fichero que no sea una imagen</p>";
     } else { //* Si no, has subido la imagen abre la llave del else cuando la extension de la imagen esta definida dentro del array y el archivo se sube.
@@ -92,13 +92,14 @@ if (isset($_POST['btnEnv'])) {
             //* move_uploaded_file(ubicacion_temporal, ubicacion_definitiva);
             //? En este caso mueve el archivo de la carpeta temporal (tmp_name) que esta en el array de foto a la ruta que hay en $nombre en mi caso --> ./imagenes_formulario/ con un nombre ya creado
 
-            if (!move_uploaded_file($_FILES['foto']['tmp_name'] , $nombre)){
+            if (!move_uploaded_file($_FILES['foto']['tmp_name'] , $nombre)){ //! preguntar paco
                 echo "<br><br>Error no se puede movel el archivo a la ubicacion deseada, $nombre";
             } else {
                 echo "<br><br>El archivo se ha movido a la ubicacion <b>$nombre</b>, de forma correcta ";
             }
 
         }
+    }
 
     } //* llave que cierra el else, de cuando la extension de la imagen esta definida dentro del array y el archivo se sube.    
 
@@ -186,3 +187,4 @@ if (isset($_POST['btnEnv'])) {
 <?php
 } //todo cerramos la llave del else que esta en la parte de arriba cierre de llave
 ?>
+<!--Terminado-->
